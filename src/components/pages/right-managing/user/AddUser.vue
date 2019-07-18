@@ -20,9 +20,17 @@
         <el-form-item label="确认密码" prop="passWord2">
           <el-input type="password" v-model="userForm.passWord2" autocomplete="off"></el-input>
         </el-form-item>
-        <!-- <el-form-item label="所属部门" prop="dept">
-          <el-input type="text" v-model="userForm.dept" autocomplete="off"  v-on:click.native="deptTreeVisible='true'"></el-input>
-        </el-form-item>-->
+        <el-form-item label="所属部门" :label-width="formLabelWidth">
+          <base-tree-select
+            :data="deptData"
+            :defaultProps="deptProps"
+            multiple
+            checkStrictly
+            :nodeKey="id"
+            :checkedKeys="userForm.defaultCheckedKeys"
+            @popoverHide="popoverHide"
+          ></base-tree-select>
+        </el-form-item>
         <el-form-item label="角色标识" prop="roles">
           <!-- <el-checkbox v-for="(item,index) in roles" :key="index" v-model="item.name" >{{item.nameZh}}</el-checkbox> -->
           <el-checkbox-group v-model="checkIds">
@@ -66,7 +74,9 @@
 <script>
 import { getDeptTree } from "./../../../../api/right-managing/dept.js";
 import { addUser } from "../../../../api/right-managing/user.js";
+import BaseTreeSelect from "./UserDeptTree/../../../../common/BaseTreeSelect";
 export default {
+  components: { BaseTreeSelect },
   props: {
     roles: {
       type: Array
@@ -138,7 +148,9 @@ export default {
         admin: "",
         superuser: "",
         user: "",
-        status: 0
+        status: 0,
+        deptIds: [],
+        defaultCheckedKeys: []
       },
       deptData: "",
       deptProps: {
@@ -166,7 +178,13 @@ export default {
     closeDialog() {
       this.resetForm("userForm");
     },
+    popoverHide(checkedIds, checkedData) {
+      // console.log(checkedIds);
+      // console.log(checkedData);
+      this.userForm.deptIds = checkedIds;
+    },
     submitForm(formName) {
+      console.log(this.userForm.deptIds);
       this.$refs[formName].validate(valid => {
         if (valid) {
           var roles = [];
@@ -188,6 +206,7 @@ export default {
             }
           });
           this.userFormVisible = false;
+          this.userForm.defaultCheckedKeys = [];
         } else {
           return false;
         }
@@ -199,6 +218,7 @@ export default {
       this.userForm.passWord1 = "";
       this.userForm.passWord2 = "";
       this.userForm.dept = "";
+      this.userForm.defaultCheckedKeys = [];
     }
   }
 };

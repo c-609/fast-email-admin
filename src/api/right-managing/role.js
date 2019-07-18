@@ -8,13 +8,13 @@ export function getRoleList() {
   })
 }
 
-// export function getRightTree() {
-//   return request({
-//     // url: '/config/allmenuTree',
-//     url: '/manage/menu/tree',
-//     method: 'get'
-//   })
-// }
+export function getRightTree() {
+  return request({
+    // url: '/config/allmenuTree',
+    url: '/manage/menu/tree',
+    method: 'get'
+  })
+}
 
 // 添加角色
 export function addRole(name, alias) {
