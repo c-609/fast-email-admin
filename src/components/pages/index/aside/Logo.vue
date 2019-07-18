@@ -3,12 +3,12 @@
     <div 
       v-if="isCollapse"
       class="title">
-      tiger
+      Msg
     </div>
     <div 
        v-if="!isCollapse"
        class="title">
-        tiger 快速开发框架
+      消息快递管理员后台
     </div>
   </div>
 </template>

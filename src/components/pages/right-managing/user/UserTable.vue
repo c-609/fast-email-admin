@@ -139,6 +139,8 @@ import {getDeptTree} from './../../../../api/right-managing/dept.js'
     inject:['reload'],
     created:function(){
         eventBus.$on('Ta',(data)=>{
+          console.log("--------------------")
+          console.log(data)
             this.Tables=data 
         })
         getDeptTree().then(res=>{

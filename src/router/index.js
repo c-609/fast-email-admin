@@ -35,7 +35,7 @@ export default new Router({
       
       children:[
         {
-          path:'/upms/user',
+          path:'/user',
           name:'User',
           component:User,
           meta: {
@@ -43,7 +43,7 @@ export default new Router({
           },
         },
         {
-          path: '/upms/role',
+          path: '/role',
           name: 'Role',
           component: Role,
           meta: {
@@ -51,7 +51,7 @@ export default new Router({
           },
         },
         {
-          path: '/upms/menu',
+          path: '/menu',
           name: 'Menu',
           component: Menu,
           meta: {
@@ -59,7 +59,7 @@ export default new Router({
           },
         },
         {
-          path: '/upms/dept',
+          path: '/dept',
           name: 'Dept',
           component: Dept,
           meta: {

@@ -10,6 +10,8 @@
           :users="users" 
           style="float:left">
         </add-user>
+        <!-- <add-users style="float:left;margin-right:20px"></add-users> -->
+        <input type="file" name="file"  @change="getFile" />
         <TableSearch :tableData="users"></TableSearch>
         <i class="el-icon-refresh refresh" @click="refresh"></i>
         <user-table :header="header" :roles="roles" ></user-table>
@@ -25,27 +27,32 @@ import {getUserList} from './../../../api/right-managing/user.js'
 import UserTable from './user/UserTable'
 import UserDeptTree from './user/UserDeptTree'
 import AddUser from './user/AddUser'
+import AddUsers from './user/AddUsers'
 import TableSearch from './../../common/TableSearch'
+import axios from 'axios'
 export default {
   name: 'User',
   inject:['reload'],
   components: {
     UserTable,
     AddUser,
+    AddUsers,
     TableSearch,
-    UserDeptTree
+    UserDeptTree,
+    file:'',
   },
-
+  
   data() {
     return {
       users: [],
       roles: [],
       header: [
         //  o:表示单个数值  1：表示多个数值 数组
+        {label:'账号' ,prop:'id',type:0},
         {label:'账号' ,prop:'username',type:0},
-        {label:'用户角色' ,prop:'roles',type:1},
-        {label:'部门',prop:'depts',type:0},
-        {label:'状态',prop:'status',type:0},
+        {label:'用户角色' ,prop:'roles',type:0},
+        // {label:'部门',prop:'depts',type:0},
+        // {label:'状态',prop:'status',type:0},
         {label: '操作', prop:'operate',width:'200px',fixed:'right'}
       ],
     }
@@ -61,9 +68,27 @@ export default {
   },
   
   methods:{
+    
     refresh(){
       this.reload();
-    }
+    },
+    getFile(e) {
+        let config = {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            
+          }
+        }
+       let file = e.target.files[0];//获取文件
+        let formdata = new FormData();
+
+   formdata.append('upload_file',file);
+   console.log(formdata.get('upload_file'));
+  axios.post('/poi/excel/upload',formdata,config).then((res)=>{
+    console.log("--------------")
+    console.log(res)
+  })
+    },
   }
 
 }

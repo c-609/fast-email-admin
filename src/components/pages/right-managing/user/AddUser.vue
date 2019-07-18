@@ -2,7 +2,7 @@
   <div style="margin-right:20px">
     <el-button type="primary" @click="userFormVisible = true" icon="el-icon-edit" size="mini">添加用户</el-button>
 
-    <el-dialog title="新增" :visible.sync="userFormVisible" @close='closeDialog'>
+    <el-dialog title="新增用户" :visible.sync="userFormVisible" @close='closeDialog'>
       <el-form :model="userForm" status-icon :rules="rules2" ref="userForm" label-width="100px" class="demo-ruleForm">
         <el-form-item label="账户" prop="account">
           <el-input type="text" v-model="userForm.account" autocomplete="off"></el-input>

@@ -34,6 +34,8 @@ export default {
   },
   methods: {
     getNodeData(data){
+      console.log("----------")
+      console.log(data)
       getListByDeptId(data.id).then(res=>{
         eventBus.$emit('tableData',res)
       })

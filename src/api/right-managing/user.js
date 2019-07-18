@@ -3,7 +3,7 @@ import request from 'axios'
 // 获取所有用户
 export function getUserList(){
   return request({
-    url: '/upms/user/',
+    url: '/manage/user/list/info',
     method: 'get'
   })
 }

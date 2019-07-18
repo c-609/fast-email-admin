@@ -13,7 +13,7 @@
     <el-submenu :key="index" :index="index+''" >
       <template slot="title">
         <!-- <i :class="item.icon" style="color: #20a0ff;width: 14px;"></i>  -->
-        <i class="el-icon-edit"></i>
+        <i class="el-icon-s-platform"></i>
           <span slot="title">{{item.name}}</span>
       </template>
       <template>
@@ -22,7 +22,7 @@
           style="padding-left:53px"
           :key="index" 
           :index=child.path 
-          @click="open(child.name)"><i class="el-icon-edit"></i>{{child.name}}</el-menu-item>
+          @click="open(child.name)"><i class="el-icon-s-tools"></i>{{child.name}}</el-menu-item>
       </template>
     </el-submenu>
   </template>
@@ -37,12 +37,83 @@ import eventBus from './../../../../utils/eventBus.js'
     data() {
       return { 
         checked:'',
-        menus:[],
+        menus:[
+        {
+            "id": 1000,
+            "parentId": -1,
+            "children": [
+                {
+                    "id": 1100,
+                    "parentId": 1000,
+                    "children": [],
+                    "icon": "icon-yonghuguanli",
+                    "name": "用户管理",
+                    "spread": false,
+                    "path": "user",
+                    "component": "views/admin/user/index",
+                    "authority": null,
+                    "redirect": null,
+                    "keepAlive": "0",
+                    "code": null,
+                    "type": "0",
+                    "label": "用户管理",
+                    "sort": 1
+                },
+              
+                {
+                    "id": 1300,
+                    "parentId": 1000,
+                    "children": [],
+                    "icon": "icon-jiaoseguanli",
+                    "name": "角色管理",
+                    "spread": false,
+                    "path": "role",
+                    "component": "views/admin/role/index",
+                    "authority": null,
+                    "redirect": null,
+                    "keepAlive": "0",
+                    "code": null,
+                    "type": "0",
+                    "label": "角色管理",
+                    "sort": 3
+                },
+                {
+                    "id": 1400,
+                    "parentId": 1000,
+                    "children": [],
+                    "icon": "icon-web-icon-",
+                    "name": "部门管理",
+                    "spread": false,
+                    "path": "dept",
+                    "component": "views/admin/dept/index",
+                    "authority": null,
+                    "redirect": null,
+                    "keepAlive": "0",
+                    "code": null,
+                    "type": "0",
+                    "label": "部门管理",
+                    "sort": 4
+                }
+            ],
+            "icon": "icon-quanxianguanli",
+            "name": "权限管理",
+            "spread": false,
+            "path": "/upms",
+            "component": "Layout",
+            "authority": null,
+            "redirect": null,
+            "keepAlive": "0",
+            "code": null,
+            "type": "0",
+            "label": "权限管理",
+            "sort": 0
+        }
+    ],
       };
     },
     created:function(){
         getMenu().then(res=>{      
-          this.menus = res.data.data;     
+          // this.menus = res.data.data;     
         });
          eventBus.$on('checked',res=>{//接收默认选中的导航栏菜单
             this.checked=res;

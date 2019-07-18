@@ -14,17 +14,17 @@
     <h3 class="login_title">系统登录</h3>
     <el-form-item prop="acount">
       <el-input type="text" v-model="loginForm.acount"  
-                auto-complete="off" placeholder="账号" prefix-icon="el-icon-umpuser"></el-input>
+                auto-complete="off" placeholder="账号" prefix-icon="el-icon-user"></el-input>
     </el-form-item>
     <el-form-item prop="pass" >
-      <el-input type="password" v-model="loginForm.pass" prefix-icon="el-icon-umplock--line"
+      <el-input type="password" v-model="loginForm.pass" prefix-icon="el-icon-unlock"
                 auto-complete="off" placeholder="密码"></el-input>
     </el-form-item>
     <el-form-item prop="passcode" class="pass-code">
         
        <div>
             <el-input class="passcode" type="text" v-model="loginForm.passcode" 
-                    auto-complete="off" placeholder="验证码" prefix-icon="el-icon-umpyanzhengma">
+                    auto-complete="off" placeholder="验证码" prefix-icon="el-icon-key">
             </el-input>
             <div class="code" @click="refreshCode" >        
             <identify :identifyCode="identifyCode"></identify>
@@ -94,7 +94,7 @@
                 },
                 checked: true,
                 loginForm: {
-                    acount:'admin1',
+                    acount:'admin',
                     pass:'123',
                     passcode: ''
                 },
@@ -133,6 +133,7 @@
                             var _this=this;
                             loginObj(this.loginForm.acount, this.loginForm.pass).then(res=>{
                                 _this.loading = false;
+                                console.log("----------------")
                                 console.log(res);
                                 if(!res){
                                 this.loginForm.acount='';
@@ -160,6 +161,7 @@
                         }
                     }
                 });
+                // this.$router.push("/home")
             } 
         }
     }

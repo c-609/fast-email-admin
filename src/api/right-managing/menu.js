@@ -1,14 +1,14 @@
 import request from 'axios'
 export function getMenu () {
     return request({
-      url: '/upms/menu',
+      url: '/manage/menu',
       method: 'get',
     })
 }
 
 export function getMenuTree(){
   return request({
-    url: '/upms/menu/tree',
+    url: '/manage/menu',
     method: 'get'
   })
 }
