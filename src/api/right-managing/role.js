@@ -1,74 +1,97 @@
 import request from 'axios'
 
 //获取所有角色
-export function getRoleList () {
-    return request({
-      url: '/manage/role/list',
-      method: 'get',
-    })
-}
-
-export function getRightTree(){
+export function getRoleList() {
   return request({
-    url: '/config/allmenuTree',
-    method: 'get'
+    url: '/manage/role/list',
+    method: 'get',
   })
 }
 
+// export function getRightTree() {
+//   return request({
+//     // url: '/config/allmenuTree',
+//     url: '/manage/menu/tree',
+//     method: 'get'
+//   })
+// }
+
 // 添加角色
-export function addRole(role, roleZh){
+export function addRole(name, alias) {
   return request({
-    url: '/upms/role/add',
-    method: 'post',
-    params: {role, roleZh}
+    // url: '/upms/role/add',
+    url: '/manage/role',
+    method: 'get',
+    params: {
+      name,
+      alias
+
+    }
   })
 }
 
 //更新角色
-export function updateRole(id, name,nameZh) {
+export function updateRole(id, alias, name) {
   return request({
-    url: '/upms/role/update',
+    // url: '/upms/role/update',
+    url: '/manage/role/update',
     method: 'post',
-    params: {id, name,nameZh}
+    params: {
+      id,
+
+      alias,
+      name,
+    }
   })
 }
 
 //为角色的部门授权
-export function updateRoleDept(rid,deptIds) {
+export function updateRoleDept(rid, deptIds) {
   return request({
     url: '/upms/role/deptAuthForRole',
     method: 'post',
-    params: {rid,deptIds}
+    params: {
+      rid,
+      deptIds
+    }
   })
 }
 
 // 根据id删除角色
 export function deleteRole(rid) {
   return request({
-    url: '/upms/role/delete',
+    // url: '/upms/role/delete',
+    url: '/manage/role/' + roleId,
     method: 'post',
-    params: {rid}
+    params: {
+      rid
+    }
   })
 }
 
 //更新角色权限
-export function updateRoleRight(rid, mids){
+export function updateRoleRight(rid, mids) {
   return request({
     url: '/upms/role/auth',
     method: 'post',
-    params: {rid, mids}
+    params: {
+      rid,
+      mids
+    }
   })
 }
 
-export function getRoleRight(rid){
+export function getRoleRight(rid) {
   return request({
     url: '/config/menuIdByRid',
     method: 'post',
-    params: {rid}
+    params: {
+      rid
+    }
   })
 }
 
-export function getRole () {
+export function getRole() {
   return request({
     url: '/upms/role/',
     method: 'get',
@@ -76,10 +99,12 @@ export function getRole () {
 }
 
 //根据角色id获取部门列表
-export function getRoleDept (roleId) {
+export function getRoleDept(roleId) {
   return request({
     url: '/config/findDeptsByRoleid',
     method: 'get',
-    params: {roleId}
+    params: {
+      roleId
+    }
   })
 }
