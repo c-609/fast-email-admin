@@ -34,11 +34,11 @@ export function addUser (username,password,status,rids) {
 }
 
 //删除用户
-export function deleteUser(uid){
+export function deleteUser(userId){
   return request({
-    url: '/upms/user/delete',
-    method: 'post',
-    params: {uid}
+    url: '/manage/user',
+    method: 'delete',
+    params: {userId}
   })
 }
 
@@ -50,8 +50,8 @@ export function updateUser(id, username,password,status,roleIds){
       "status": status,
     }
     return request({
-      url: '/upms/user/update',
-      method: 'post',
+      url: '/manage/user/update',
+      method: 'put',
       params: {data,roleIds},
       transformRequest: [function(){
         return JSON.stringify(data)

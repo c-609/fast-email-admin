@@ -33,24 +33,12 @@
     <el-dialog title="编辑角色" :visible.sync="isAddRoleForm" @close="closeEditDialog">
       <el-form :model="roleForm" status-icon :rules="rules" ref="roleForm" label-width="100px" class="demo-ruleForm">
         <el-form-item label="角色标识" prop="role" >
-          <el-input type="text" v-model="roleForm.role" disabled autocomplete="off"></el-input>
+          <el-input type="text" v-model="roleForm.alias" disabled autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="角色描述" prop="roleZh">
           <el-input type="text" v-model="roleForm.roleZh" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="数据权限" prop="auth">
-          <el-tree
-            :data="deptData" 
-            :props="deptProps" 
-            ref="deptData"
-            show-checkbox
-            check-strictly=true
-            node-key="id"
-            :default-expand-all="true"
-            :default-checked-keys="defaultCheckedKeys"
-             >
-          </el-tree>
-        </el-form-item>
+     
         <el-form-item>
           <el-button type="primary" @click="submitForm('roleForm')">提交</el-button>
           <el-button @click="resetForm('roleForm')">取消</el-button>
@@ -187,9 +175,10 @@ import {getDeptTree} from './../../../../api/right-managing/dept.js'
           this.$refs.roleForm.resetFields();
         },
         handleEdit(row){
+          console.log("row")
           this.roles = row;
           this.roleForm.id = row.id;
-          this.roleForm.role = row.name;
+          this.roleForm.role = row.alias;
           this.roleForm.roleZh = row.nameZh;
           getRoleDept(row.id).then(res=>{        
             this.defaultCheckedKeys = res.data.data;

@@ -26,7 +26,7 @@
         :width="item.width"
         :fixed="item.fixed">
         <template slot-scope="scope">
-          <div v-if="item.label=='部门'">
+          <div v-if="item.label=='部门' || item.label=='角色'">
             {{scope.row[item.prop][0].name}}
             <div v-for="(i,index) in scope.row[item.prop]" :key="index">
                 <!-- {{scope.row[item.prop][index].name}} -->
@@ -44,7 +44,7 @@
           </div>
           <div v-else>{{scope.row[item.prop]}}</div> 
           
-          <el-button @click="handleView(scope.row.id)" type="text" size="small" v-if="item.prop=='operate'">查看</el-button>
+          <!-- <el-button @click="handleView(scope.row.id)" type="text" size="small" v-if="item.prop=='operate'">查看</el-button> -->
           <el-button @click="handleEdit( scope.row)" type="text" size="small" v-if="item.prop=='operate'">编辑</el-button>
           <el-button @click="handleDelete(scope.row.id)" type="text" size="small" v-if="item.prop==='operate'">删除</el-button>
        </template>
@@ -89,7 +89,7 @@
         </el-form-item>
         <el-form-item label="角色标识"  :label-width="formLabelWidth">
           <el-checkbox-group v-model="checkIds">
-            <el-checkbox v-for="(item,index) in roles" :key="index" :label="item.id"  >{{item.nameZh}}</el-checkbox>
+            <el-checkbox v-for="(item,index) in roles" :key="index" :label="item.id"  >{{item.name}}</el-checkbox>
           </el-checkbox-group>
         </el-form-item>
         <el-form-item label="用户状态"  :label-width="formLabelWidth">
@@ -265,6 +265,7 @@ import {getDeptTree} from './../../../../api/right-managing/dept.js'
           this.dialogFormVisible=false;
       },
       closeDialog(){
+        console.log(this.roles)
         this.form.password='';
         this.form.admin='';
         this.form.superuser='';

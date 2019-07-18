@@ -19,7 +19,7 @@
         <el-form-item label="角色标识" prop="roles">
           <!-- <el-checkbox v-for="(item,index) in roles" :key="index" v-model="item.name" >{{item.nameZh}}</el-checkbox> -->
           <el-checkbox-group v-model="checkIds">
-            <el-checkbox v-for="(item,index) in roles" :key="index" :label="item.id"  >{{item.nameZh}}</el-checkbox>
+            <el-checkbox v-for="(item,index) in roles" :key="index" :label="item.id"  >{{item.name}}</el-checkbox>
           </el-checkbox-group>
         </el-form-item>
         <el-form-item label="用户状态"  :label-width="formLabelWidth">

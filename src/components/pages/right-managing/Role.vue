@@ -11,7 +11,7 @@
 <script>
 import RoleTable from './role/RoleTable'
 import AddRole from './role/AddRole'
-import {getRole} from './../../../api/right-managing/role.js'
+import {getRole, getRoleList} from './../../../api/right-managing/role.js'
 import TableSearch from './../../common/TableSearch'
 export default {
     name: 'App',
@@ -23,15 +23,15 @@ export default {
     data(){
         return{
             header:[   
-                {label:'角色标识' ,prop:'name'},
-                {label:'角色描述' ,prop:'nameZh'},
+                {label:'角色标识' ,prop:'alias'},
+                {label:'角色描述' ,prop:'name'},
                 {label:'操作', prop: 'operate',width:'200px',fixed:'right'}
             ],
             roles:[],
         }
     },
     created:function(){
-        getRole().then(res=>{
+        getRoleList().then(res=>{
           this.roles=res.data.data;
         })
         

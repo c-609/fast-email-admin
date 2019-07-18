@@ -3,7 +3,7 @@ import request from 'axios'
 //获取所有角色
 export function getRoleList () {
     return request({
-      url: '/config/allroles',
+      url: '/manage/role/list',
       method: 'get',
     })
 }

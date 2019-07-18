@@ -48,11 +48,11 @@ export default {
       roles: [],
       header: [
         //  o:表示单个数值  1：表示多个数值 数组
-        {label:'账号' ,prop:'id',type:0},
+        {label:'用户ID' ,prop:'id',type:0},
         {label:'账号' ,prop:'username',type:0},
-        {label:'用户角色' ,prop:'roles',type:0},
-        // {label:'部门',prop:'depts',type:0},
-        // {label:'状态',prop:'status',type:0},
+        {label:'角色' ,prop:'roles',type:0},
+        {label:'部门',prop:'depts',type:0},
+        {label:'状态',prop:'status',type:0},
         {label: '操作', prop:'operate',width:'200px',fixed:'right'}
       ],
     }
