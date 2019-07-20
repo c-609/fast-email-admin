@@ -110,8 +110,10 @@ export default {
   props: ["header"],
   components: { EditRoleForm, BaseTreeSelect },
   inject: ["reload"],
-  created: function() {
+  mounted: function() {
     eventBus.$on("Ta", data => {
+      console.log("--------------")
+      console.log(data)
       this.Tables = data;
     });
     getRightTree().then(res => {

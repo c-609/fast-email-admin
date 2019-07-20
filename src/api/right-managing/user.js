@@ -9,22 +9,24 @@ export function getUserList(){
 }
 
 //添加用户
-export function addUser (username,password,status,rids) {
-  const data = {
-    "username": username,
-    "password": password,
-    "status": status,
-  }
+export function addUser (username,password,status,roleIds,groupIds,deptIds) {
+  // const data = {
+  //   "username": username,
+  //   "password": password,
+  //   "status": status,
+  //   "roleIds":roleIds,
+  //   "groupIds":groupIds,
+  //   "deptIds":deptIds
+  // }
   return request({
-    url: '/upms/user/add',
+    url: '/manage/user/back',
     method: 'post',
-    params: {data,rids},
-    transformRequest: [function(){
-      return JSON.stringify(data)
-    }],
-    headers: {
-      'Content-Type' : 'application/json;'
-    }
+    // params: {data},
+    // transformRequest: [function(){
+    //   return JSON.stringify(data)
+    // }],
+    // headers: { 'content-type': 'application/x-www-form-urlencoded' }
+    params:{username,password,status,roleIds,groupIds,deptIds}
   })
   // return request({
   //   url: '/upms/user/add',
@@ -33,6 +35,23 @@ export function addUser (username,password,status,rids) {
   // })
 }
 
+//增加前台老师
+export function addTeacher(name,userId){
+  return request({
+    url: '/manage/user/reception/teacher',
+    method: 'post',
+    params: {name,userId}
+  })
+}
+
+//增加前台学生
+export function addStudent(name,userId){
+  return request({
+    url: '/manage/user/reception/student',
+    method: 'post',
+    params: {name,userId}
+  })
+}
 //删除用户
 export function deleteUser(userId){
   return request({
@@ -42,23 +61,23 @@ export function deleteUser(userId){
   })
 }
 
-export function updateUser(id, username,password,status,roleIds){
-    const data = {
-      "id": id,
-      "username": username,
-      "password": password,
-      "status": status,
-    }
+export function updateUser(userId, roleId,deptId){
+    // const data = {
+    //   "id": id,
+    //   "username": username,
+    //   "password": password,
+    //   "status": status,
+    // }
     return request({
-      url: '/manage/user/update',
-      method: 'put',
-      params: {data,roleIds},
-      transformRequest: [function(){
-        return JSON.stringify(data)
-      }],
-      headers: {
-        'Content-Type' : 'application/json;'
-      }
+      url: '/manage/user/dept',
+      method: 'post',
+      params: {userId,roleId,deptId},
+      // transformRequest: [function(){
+      //   return JSON.stringify(data)
+      // }],
+      // headers: {
+      //   'Content-Type' : 'application/json;'
+      // }
     })
 }
 
@@ -72,11 +91,11 @@ export function getUserMenuTree (uid) {
 }
 
 //根据部门id获取用户列表
-export function getListByDeptId (deptId) {
+export function getListByDeptId (deptIds) {
   return request ({
-    url: '/upms/user/getListByDeptId',
+    url: '/manage/user/dept',
     method: 'get',
-    params: {deptId}
+    params: {deptIds}
   })
 }
 

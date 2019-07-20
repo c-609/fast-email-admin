@@ -4,7 +4,7 @@
      <p class="time"> {{nowTime}} <p>
       <div>
     <img src="./../../../static/img/logo.png" style="width:350px;height:270px;margin-top:30px">
-    <p  style="color:white; font-size:22px" >Tiger快速开发框架</p>
+    <p  style="color:white; font-size:22px" >消息快递管理员后台</p>
     <p style="color:white">v2.0.0</p>
   </div>
   </div>

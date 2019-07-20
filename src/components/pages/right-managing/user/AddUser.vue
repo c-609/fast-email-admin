@@ -11,6 +11,9 @@
         label-width="100px"
         class="demo-ruleForm"
       >
+       <el-form-item label="姓名" prop="username">
+          <el-input type="text" v-model="userForm.username" autocomplete="off"></el-input>
+        </el-form-item>
         <el-form-item label="账户" prop="account">
           <el-input type="text" v-model="userForm.account" autocomplete="off"></el-input>
         </el-form-item>
@@ -73,7 +76,7 @@
 
 <script>
 import { getDeptTree } from "./../../../../api/right-managing/dept.js";
-import { addUser } from "../../../../api/right-managing/user.js";
+import { addUser,addTeacher,addStudent } from "../../../../api/right-managing/user.js";
 import BaseTreeSelect from "./UserDeptTree/../../../../common/BaseTreeSelect";
 export default {
   components: { BaseTreeSelect },
@@ -92,14 +95,27 @@ export default {
     });
   },
   data() {
-    var i = 0;
+    
+     var validateUserName = (rule, value, callback) => {
+       var i = 0;
+      if (value === "") {
+        callback(new Error("姓名不能为空"));
+      } else {
+       
+        if (i >= this.users.length) {
+          this.$refs.userForm.validateField("account");
+        }
+        callback();
+      }
+    };
     var validateAcount = (rule, value, callback) => {
+      var i = 0;
       if (value === "") {
         callback(new Error("账户不能为空"));
       } else {
         for (i = 0; i < this.users.length; i++) {
           if (this.userForm.account === this.users[i].username) {
-            callback(new Error("用户名已存在"));
+            callback(new Error("账户已存在"));
             break;
           }
         }
@@ -110,16 +126,19 @@ export default {
       }
     };
     var validatePass = (rule, value, callback) => {
+      var i = 0;
       if (value === "") {
         callback(new Error("请输入密码"));
       } else {
-        if (this.userForm.checkPass !== "") {
+       
+        if (i >= this.users.length) {
           this.$refs.userForm.validateField("checkPass");
-        }
+        } 
         callback();
       }
     };
     var validatePass2 = (rule, value, callback) => {
+      var i = 0;
       if (value === "") {
         callback(new Error("请再次输入密码"));
       } else if (value !== this.userForm.passWord1) {
@@ -141,6 +160,7 @@ export default {
       userFormVisible: false,
       formLabelWidth: "120px",
       userForm: {
+        username:"",
         account: "",
         passWord1: "",
         passWord2: "",
@@ -158,6 +178,7 @@ export default {
         children: "children"
       },
       rules2: {
+        username: [{ validator: validateUserName, trigger: "blur" }],
         account: [{ validator: validateAcount, trigger: "blur" }],
         passWord2: [{ validator: validatePass2, trigger: "blur" }],
         passWord1: [{ validator: validatePass, trigger: "blur" }]
@@ -184,25 +205,63 @@ export default {
       this.userForm.deptIds = checkedIds;
     },
     submitForm(formName) {
-      console.log(this.userForm.deptIds);
+      // console.log(this.userForm.deptIds);
+      // console.log(this.userForm.username);
+      // console.log(this.userForm.account);
+      // console.log(this.userForm.passWord1);
+      // console.log(this.checkIds)
       this.$refs[formName].validate(valid => {
         if (valid) {
           var roles = [];
-          roles = this.checkIds;
+          roles = this.checkIds.join(",");
+          var  deptIds = this.userForm.deptIds.join(",");
           addUser(
             this.userForm.account,
             this.userForm.passWord1,
             this.userForm.status,
-            roles.join(",")
+            roles,
+            roles,
+           deptIds
           ).then(res => {
-            this.reload();
-            if (res && res.data.data != 0) {
-              this.$message({
-                type: "success",
-                message: "添加用户成功"
-              });
-            } else {
-              this.$message.error("添加失败");
+            console.log( this.userForm.account+"----"+this.userForm.passWord1+"-----"+ this.userForm.status+"----"+ roles+"----"+ this.userForm.deptIds)
+            console.log(roles)
+            if(res.data.code ==0){
+              console.log(res.data.data)
+              if(roles== 1){
+                addStudent(this.userForm.username,res.data.data).then(res1=>{
+                     if (res1 && res1.data.code == 0) {
+                        this.$message({
+                          type: "success",
+                          message: "添加用户成功"
+                        });
+                      } else {
+                        this.$message.error("添加失败");
+                      }
+                })
+              }
+              if(roles == 2){
+               addTeacher(this.userForm.username,res.data.data).then(res2=>{
+                  if (res1 && res2.data.code == 0) {
+                        this.reload();
+                        this.$message({
+                          type: "success",
+                          message: "添加用户成功"
+                        });
+                      } else {
+                        this.$message.error("添加失败");
+                      }
+                })
+              }
+              // if(this.)
+              // 
+              // if (res && res.data.data != 0) {
+              //   this.$message({
+              //     type: "success",
+              //     message: "添加用户成功"
+              //   });
+              // } else {
+              //   this.$message.error("添加失败");
+              // }
             }
           });
           this.userFormVisible = false;

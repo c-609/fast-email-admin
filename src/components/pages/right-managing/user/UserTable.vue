@@ -7,10 +7,10 @@
       :row-class-name="tableRowClassName"
       :header-cell-style="headerColor"
       >
-      <el-table-column
+      <!-- <el-table-column
         type="selection"
         width="55">
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column
         type="index"
         width="50"
@@ -73,9 +73,9 @@
         <el-form-item label="账号" :label-width="formLabelWidth" >
           <el-input v-model="form.username" autocomplete="off" :disabled="true"></el-input>
         </el-form-item>
-        <el-form-item label="密码" :label-width="formLabelWidth">
+        <!-- <el-form-item label="密码" :label-width="formLabelWidth">
           <el-input v-model="form.password" autocomplete="off"></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="所属部门" :label-width="formLabelWidth">
           <base-tree-select
             :data="deptData"
@@ -87,11 +87,7 @@
             @popoverHide="popoverHide" >
           </base-tree-select>
         </el-form-item>
-        <el-form-item label="角色标识"  :label-width="formLabelWidth">
-          <el-checkbox-group v-model="checkIds">
-            <el-checkbox v-for="(item,index) in roles" :key="index" :label="item.id"  >{{item.name}}</el-checkbox>
-          </el-checkbox-group>
-        </el-form-item>
+      
         <el-form-item label="用户状态"  :label-width="formLabelWidth">
           <el-switch
             v-model="form.status"
@@ -111,7 +107,7 @@
     </el-dialog>
     
     <div>
-      <el-button size="mini" type="primary" style="float:left" @click="handleBatchDelete">批量删除</el-button>
+      <!-- <el-button size="mini" type="primary" style="float:left" @click="handleBatchDelete">批量删除</el-button> -->
     	<el-pagination 
         background
         layout="prev, pager, next, sizes, total, jumper"
@@ -139,7 +135,7 @@ import {getDeptTree} from './../../../../api/right-managing/dept.js'
     inject:['reload'],
     created:function(){
         eventBus.$on('Ta',(data)=>{
-          console.log("--------------------")
+          console.log("--------2222------------")
           console.log(data)
             this.Tables=data 
         })
@@ -166,6 +162,8 @@ import {getDeptTree} from './../../../../api/right-managing/dept.js'
         formLabelWidth: '120px',
         checkIds:[],
         form:{
+          deptIds:"",
+          roles:[],
           id:'',
           username:'',
           password:'',
@@ -215,8 +213,7 @@ import {getDeptTree} from './../../../../api/right-managing/dept.js'
         return obj;
       },
        popoverHide (checkedIds, checkedData) {
-         console.log(checkedIds);
-         console.log(checkedData);
+         this.form.deptIds = checkedIds.join(",");
       },
         handleCurrentChange(cpage) {
 					this.currpage = cpage;
@@ -247,7 +244,9 @@ import {getDeptTree} from './../../../../api/right-managing/dept.js'
         }) 
       },
        handleEdit(row) {
+         
           this.form.username=row.username;
+          this.form.roles = row.roles[0].id;
           this.form.id=row.id;
           this.form.status=row.status;
           this.form.defaultCheckedKeys = [];
@@ -257,9 +256,18 @@ import {getDeptTree} from './../../../../api/right-managing/dept.js'
           this.dialogFormVisible=true;
       },
       handleDialogSure(){
-        var roles = [];
-        roles =this.checkIds.join(",");
-        updateUser(this.form.id, this.form.username,this.form.password,this.form.status,roles).then(res=>{
+       console.log(this.form.id)
+       console.log(this.form.roles)
+       console.log(this.form.deptIds)
+        updateUser(this.form.id,this.form.roles,this.form.deptIds).then(res=>{
+          if(res.data.code == 0){
+            this.$message({
+                          type: "success",
+                          message: "修改成功"
+                        });
+                    }else {
+                        this.$message.error("修改失败");
+                    }
           this.reload();
           });
           this.dialogFormVisible=false;
