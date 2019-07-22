@@ -94,6 +94,7 @@ import {addRole} from './../../../../api/right-managing/role.js'
        var  _this = this;
         this.$refs[formName].validate((valid) => {
           if (valid) {
+            console.log(this.roleForm.role+this.roleForm.roleZh)
             addRole(this.roleForm.role,this.roleForm.roleZh).then((res)=>{
               if(res.data.data===1){
                 _this.$message({

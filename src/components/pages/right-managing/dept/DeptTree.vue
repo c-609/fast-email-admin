@@ -9,6 +9,7 @@
       :props="deptProps" 
       @node-click="getNodeData"
       :render-content="renderContent"
+      default-expand-all
       >  
     </el-tree>
   </div>

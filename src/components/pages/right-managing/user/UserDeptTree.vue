@@ -48,9 +48,29 @@ export default {
      
       var deptId = this.$refs.tree.getCheckedKeys().join(",");
       getListByDeptId(deptId).then(res => {
-        console.log("------11111-------")
-        console.log(res)
-        eventBus.$emit("tableData", res);
+     
+         let data = res.data.data;
+         var users = [];
+          for(var i=0; i<data.length;i++){
+            var row = {};
+
+            row.id = data[i].id;
+            row.username = data[i].username;
+            row.password = data[i].password;
+            row.status = data[i].status;
+            if(data[i].student != null){
+              row.name = data[i].student.name;
+              row.roleName = data[i].student.roles[0].name;
+              row.deptName = data[i].student.depts[0].name;
+            }
+            if(data[i].teacher != null){
+              row.name = data[i].teacher.name;
+              row.roleName = data[i].teacher.roles[0].name;
+              row.deptName = data[i].teacher.depts[0].name;
+            }
+            users.push(row);
+       }
+        eventBus.$emit("tableData", users);
       });
       this.$refs.tree.setCheckedKeys([]);
     }

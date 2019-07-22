@@ -45,8 +45,9 @@ export default {
         //  o:表示单个数值  1：表示多个数值 数组
         { label: "用户ID", prop: "id", type: 0 },
         { label: "账号", prop: "username", type: 0 },
-        // { label: "角色", prop: "roles", type: 0 },
-        // { label: "部门", prop: "depts", type: 0 },
+        { label: "姓名", prop: "name", type: 0 },
+        { label: "角色", prop: "roleName", type: 0 },
+        { label: "部门", prop: "deptName", type: 0 },
         { label: "状态", prop: "status", type: 0 },
         { label: "操作", prop: "operate", width: "200px", fixed: "right" }
       ]
@@ -57,15 +58,26 @@ export default {
     getUserList().then(res => {
       let data = res.data.data;
       for(var i=0; i<data.length;i++){
-        console.log("1")
-        this.users[i].id = data[i].id;
-        this.users[i].username = data[i].username;
-        this.users[i].password = data[i].password;
-        this.users[i].status = data[i].status;
+        var row = {};
+
+        row.id = data[i].id;
+        row.username = data[i].username;
+        row.password = data[i].password;
+        row.status = data[i].status;
+        row.roleName = data[i].roles[0].name;
+        row.roleId = data[i].roles[0].id;
+        row.deptName = data[i].depts[0].name;
+        row.deptId = data[i].depts[0].id;
+        if(data[i].student != null){
+          row.name = data[i].student.name;
+        }
+         if(data[i].teacher != null){
+          row.name = data[i].teacher.name;
+        }
+        this.users.push(row);
       }
-      console.log("111111111111111");
-      console.log(this.users)
-      this.users = res.data.data;
+     
+     
     });
     getRoleList().then(data => {
       this.roles = data.data.data;
@@ -104,3 +116,4 @@ export default {
   color: #409eff;
 }
 </style>
+

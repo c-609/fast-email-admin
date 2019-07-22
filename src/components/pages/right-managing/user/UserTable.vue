@@ -26,19 +26,20 @@
         :width="item.width"
         :fixed="item.fixed">
         <template slot-scope="scope">
-          <div v-if="item.label=='部门' || item.label=='角色'">
-            {{scope.row[item.prop][0].name}}
-            <div v-for="(i,index) in scope.row[item.prop]" :key="index">
+          <!-- {{scope.row[item.prop]}} -->
+          <!-- <div v-if="item.label=='部门' || item.label=='角色'"> -->
+            <!-- {{scope.row[item.prop][0].name}} -->
+            <!-- <div v-for="(i,index) in scope.row[item.prop]" :key="index"> -->
                 <!-- {{scope.row[item.prop][index].name}} -->
-            </div>
-          </div>
-          <div v-else-if="item.type==1">
-             {{scope.row[item.prop][0].nameZh}}
-            <div v-for="(i,index) in scope.row[item.prop]" :key="index">
+            <!-- </div> -->
+          <!-- </div> -->
+          <!-- <div v-else-if="item.type==1"> -->
+             <!-- {{scope.row[item.prop][0].nameZh}} -->
+            <!-- <div v-for="(i,index) in scope.row[item.prop]" :key="index"> -->
                 <!-- {{scope.row[item.prop][index].nameZh}} -->
-            </div>
-            </div> 
-          <div v-else-if="item.label=='状态'">
+            <!-- </div> -->
+            <!-- </div>  -->
+          <div v-if="item.label=='状态'">
               <div v-if="scope.row[item.prop]==0">有效</div>
               <div v-if="scope.row[item.prop]==102">锁定</div>
           </div>
@@ -143,9 +144,9 @@ import {getDeptTree} from './../../../../api/right-managing/dept.js'
           this.deptData = res.data.data
         })
     },
-    // beforeDestroy() {
-    //   eventBus.$off('Ta');
-    // },
+    beforeDestroy() {
+      eventBus.$off('Ta');
+    },
     data() {
       return {
         deptData: '',
@@ -246,13 +247,13 @@ import {getDeptTree} from './../../../../api/right-managing/dept.js'
        handleEdit(row) {
          
           this.form.username=row.username;
-          this.form.roles = row.roles[0].id;
+          this.form.roles = row.roleId;
           this.form.id=row.id;
           this.form.status=row.status;
-          this.form.defaultCheckedKeys = [];
-          for(var i=0; i<row.depts.length;i++){
-            this.form.defaultCheckedKeys[i] = row.depts[i].id;
-          }
+          
+         
+            this.form.defaultCheckedKeys[0] = row.deptId;
+          
           this.dialogFormVisible=true;
       },
       handleDialogSure(){

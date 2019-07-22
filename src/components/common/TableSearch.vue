@@ -21,7 +21,7 @@ export default {
     },
      created:function(){
         eventBus.$on('tableData',res=>{
-            this.tableData=res.data.data
+            this.tableData=res;
         })
     },
 

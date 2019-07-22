@@ -206,7 +206,7 @@ export default {
     },
     submitForm(formName) {
       // console.log(this.userForm.deptIds);
-      // console.log(this.userForm.username);
+     
       // console.log(this.userForm.account);
       // console.log(this.userForm.passWord1);
       // console.log(this.checkIds)
@@ -215,6 +215,7 @@ export default {
           var roles = [];
           roles = this.checkIds.join(",");
           var  deptIds = this.userForm.deptIds.join(",");
+          var username = this.userForm.username;
           addUser(
             this.userForm.account,
             this.userForm.passWord1,
@@ -228,8 +229,9 @@ export default {
             if(res.data.code ==0){
               console.log(res.data.data)
               if(roles== 1){
-                addStudent(this.userForm.username,res.data.data).then(res1=>{
-                     if (res1 && res1.data.code == 0) {
+                console.log(this.userForm.username)
+                addStudent(username,res.data.data).then(res1=>{
+                     if (res1.data.code == 0) {
                         this.$message({
                           type: "success",
                           message: "添加用户成功"
@@ -241,7 +243,7 @@ export default {
               }
               if(roles == 2){
                addTeacher(this.userForm.username,res.data.data).then(res2=>{
-                  if (res1 && res2.data.code == 0) {
+                  if (res2.data.code == 0) {
                         this.reload();
                         this.$message({
                           type: "success",
