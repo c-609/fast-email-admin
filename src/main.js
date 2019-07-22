@@ -8,10 +8,10 @@ import App from './App'
 import router from './router'
 import './styles/common.scss'
 import '../theme/index.css'
-
+import Axios from 'axios'
 Vue.use(ElementUI)
 Vue.config.productionTip = false
-
+// Axios.defaults.baseURL = 'http://119.29.101.166:8095';
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
